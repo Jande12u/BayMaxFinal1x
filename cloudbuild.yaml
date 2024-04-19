@@ -1,1 +1,44 @@
+steps:
+  # Step 1: Check out the source code from the repository
+  - name: 'gcr.io/cloud-builders/git'
+    args: ['clone', '--branch=main', '--single-branch', 'https://github.com/Jande12u/BayMaxFinal1x.git', '/workspace/source']
+
+  # Step 2: Set up Node.js version
+  - name: 'gcr.io/cloud-builders/node'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+        apt-get install -y nodejs
+
+  # Step 3: Install dependencies and build the application
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['install']
+    dir: '/workspace/source'
+
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'build']
+    dir: '/workspace/source'
+
+  # Step 4: Zip the artifact for deployment
+  - name: 'gcr.io/cloud-builders/tar'
+    args: ['-zcf', 'release.tar.gz', '.']
+    dir: '/workspace/source'
+
+  # Step 5: Upload artifact to Cloud Storage
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['cp', 'release.tar.gz', 'gs://632098526310-us-central1-blueprint-config']
+
+# This is a placeholder for deploying to Cloud Run or other services
+images:
+  - 'gcr.io/propane-service-420801/baymax-image' # Replace '$PROJECT_ID' with 'propane-service-420801'
+
+# Cloud Run service configuration
+deploy:
+  region: 'us-central1'
+  platform: 'managed'
+  timeout: '300s'
+  memory: '512Mi'
+  service: 'baymax-service' # Replace 'your-service-name' with your chosen service name
 
