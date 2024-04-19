@@ -33,4 +33,4 @@ steps:
 options:
   logging:
     # Specify the logs bucket where build logs will be stored
-    logsBucket: 632098526310-us-central1-blueprint-config
+    logsBucket: '632098526310-us-central1-blueprint-config'
