@@ -33,12 +33,3 @@ steps:
 # This is a placeholder for deploying to Cloud Run or other services
 images:
   - 'gcr.io/propane-service-420801/baymax-image' # Replace '$PROJECT_ID' with 'propane-service-420801'
-
-# Cloud Run service configuration
-deploy:
-  region: 'us-central1'
-  platform: 'managed'
-  timeout: '300s'
-  memory: '512Mi'
-  service: 'baymax-service' # Replace 'your-service-name' with your chosen service name
-
