@@ -31,5 +31,6 @@ steps:
     args: ['cp', 'release.tar.gz', 'gs://632098526310-us-central1-blueprint-config']
 
 options:
-  build:
+  logging:
+    # Specify the logs bucket where build logs will be stored
     logsBucket: 632098526310-us-central1-blueprint-config
